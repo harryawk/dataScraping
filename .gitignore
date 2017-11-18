@@ -119,3 +119,10 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.gitignore.io/api/python,virtualenv
+out.txt
+test.html
+penanganan.py
+penyakit.py
+propagasi.py
+result.txt
+tanaman.py
