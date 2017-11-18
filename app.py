@@ -28,7 +28,7 @@ def get_data():
   page = requests.get(links[info_id])
   # print page.encoding
   # print page.text.encode('utf8')
-  soup = BeautifulSoup(page.text.encode('utf8'), 'html.parser')
+  soup = BeautifulSoup(page.text, 'html.parser')
 
   names = soup.find_all('h4')
   # print names
@@ -109,7 +109,7 @@ def get_data():
           some_thing.decompose()
         # the_propagation.find_all('a', {'class': ''})
         subcontent = the_propagation
-        the_content = subcontent.prettify(formatter="html")
+        the_content = subcontent.prettify(formatter="html", encoding='latin1')
         # if the_content.find('<h3 class="info ">Uses</h3>') == -1:
         #   if the_content.find('<h3 class="info ">Propagation</h3>') == -1:
         #     third_content = ''
@@ -135,7 +135,7 @@ def get_data():
           some_thing.decompose()
         # the_propagation.find_all('a', {'class': ''})
         subcontent = the_propagation
-        the_content = subcontent.prettify(formatter="html")
+        the_content = subcontent.prettify(formatter="html", encoding='latin1')
 
         if subcontent.find('h3', {'class': 'info '}).contents[0] == 'Propagation':
           third_content = the_content
@@ -177,7 +177,19 @@ def get_data():
   nama_tanaman = soup.find('h1')
   result_the_name = nama_tanaman.text.strip()
   print result_the_name
-  return json.dumps({'name': result_the_name, 'result_name': result_name, 'result_cause': result_causes, 'result_management': result_managements, 'description': str(the_description), 'uses': str(second_content), 'propagation': str(third_content), 'result_symptoms': result_symptoms, 'result_comments': result_comments}), {'Content-Type': 'application/json'}
+  # print third_content.encode('utf8')
+  return json.dumps({
+    'name': result_the_name, 
+    'result_name': result_name, 
+    'result_cause': result_causes, 
+    'result_management': result_managements, 
+    'description': str(the_description), 
+    'uses': str(second_content).decode('latin1'), 
+    'propagation': str(third_content).decode('latin1'), 
+    'result_symptoms': result_symptoms, 
+    'result_comments': result_comments
+    }), {'Content-Type': 'application/json'}
+  # return json.dumps({'name': result_the_name, 'result_name': result_name, 'result_cause': result_causes, 'result_management': result_managements, 'description': str(the_description), 'uses': str(second_content), 'propagation': str(third_content), 'result_symptoms': result_symptoms, 'result_comments': result_comments}), {'Content-Type': 'application/json'}
   
 
 if __name__=='__main__':
