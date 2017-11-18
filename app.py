@@ -110,6 +110,14 @@ def get_data():
         # the_propagation.find_all('a', {'class': ''})
         subcontent = the_propagation
         the_content = subcontent.prettify(formatter="html")
+        # if the_content.find('<h3 class="info ">Uses</h3>') == -1:
+        #   if the_content.find('<h3 class="info ">Propagation</h3>') == -1:
+        #     third_content = ''
+        #   else:
+        #     third_content = the_content
+        # else:
+        #   third_content = second_content
+        #   second_content = the_content
         # the_fence = '<html><head><link rel="stylesheet" media="all" href="http://plantvillage.org/assets/application-1e61d2e1c058399262f0694302df5913f0295f25350b7fba3cb6d15aff363abf.css" /><script src="http://plantvillage.org/assets/application-9cbfdabf2cbd79ac64622e50d34de10a0bf7e2398146002fdb3230bc1d8e0be5.js"></script></head><body>'
         second_content = the_content
         # print second_content
@@ -128,8 +136,23 @@ def get_data():
         # the_propagation.find_all('a', {'class': ''})
         subcontent = the_propagation
         the_content = subcontent.prettify(formatter="html")
+
+        if subcontent.find('h3', {'class': 'info '}).contents[0] == 'Propagation':
+          third_content = the_content
+        else:
+          third_content = second_content
+          second_content = the_content
+        # if str(the_content).find(str(<h3 class="info ">Uses</h3>)) == -1:
+        #   if str(the_content).find('<h3 class="info ">Propagation</h3>') == -1:
+        #     third_content = ''
+        #   else:
+        #     third_content = the_content
+        # else:
+        #   third_content = second_content
+        #   second_content = the_content
+
         # the_fence = '<html><head><link rel="stylesheet" media="all" href="http://plantvillage.org/assets/application-1e61d2e1c058399262f0694302df5913f0295f25350b7fba3cb6d15aff363abf.css" /><script src="http://plantvillage.org/assets/application-9cbfdabf2cbd79ac64622e50d34de10a0bf7e2398146002fdb3230bc1d8e0be5.js"></script></head><body>'
-        third_content = the_content
+        # third_content = the_content
       # elif inc == 3:
       #   the_propagation = description
       #   for some_thing in the_propagation.find_all('a', {'class': 'prev'}):
@@ -154,7 +177,7 @@ def get_data():
   nama_tanaman = soup.find('h1')
   result_the_name = nama_tanaman.text.strip()
   print result_the_name
-  return json.dumps({'name': result_the_name, 'result_name': result_name, 'result_cause': result_causes, 'result_management': result_managements, 'descriptions': str(the_description), 'second_content': str(second_content), 'third_content': str(third_content), 'result_symptoms': result_symptoms, 'result_comments': result_comments}), {'Content-Type': 'application/json'}
+  return json.dumps({'name': result_the_name, 'result_name': result_name, 'result_cause': result_causes, 'result_management': result_managements, 'description': str(the_description), 'uses': str(second_content), 'propagation': str(third_content), 'result_symptoms': result_symptoms, 'result_comments': result_comments}), {'Content-Type': 'application/json'}
   
 
 if __name__=='__main__':
